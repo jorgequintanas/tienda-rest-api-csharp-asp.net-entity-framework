@@ -1,0 +1,357 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="tiendaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="clases">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="numero_clase" Type="int" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="id_departamento" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="departamentos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="numero_departamento" Type="int" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="familias">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="numero_familia" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="id_clase" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="productos">
+          <Key>
+            <PropertyRef Name="sku" />
+          </Key>
+          <Property Name="sku" Type="int" Nullable="false" />
+          <Property Name="articulo" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="marca" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="modelo" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="departamento" Type="int" Nullable="false" />
+          <Property Name="clase" Type="int" Nullable="false" />
+          <Property Name="familia" Type="int" Nullable="false" />
+          <Property Name="fecha_alta" Type="date" Nullable="false" />
+          <Property Name="stock" Type="int" Nullable="false" />
+          <Property Name="cantidad" Type="int" Nullable="false" />
+          <Property Name="descontinuado" Type="bit" Nullable="false" />
+          <Property Name="fecha_baja" Type="date" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_CLASE_DEPARTAMENTO">
+          <End Role="departamentos" Type="Self.departamentos" Multiplicity="1" />
+          <End Role="clases" Type="Self.clases" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="departamentos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="clases">
+              <PropertyRef Name="id_departamento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FAMILIA_CLASE">
+          <End Role="clases" Type="Self.clases" Multiplicity="1" />
+          <End Role="familias" Type="Self.familias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clases">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="familias">
+              <PropertyRef Name="id_clase" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PROD_CLASE">
+          <End Role="clases" Type="Self.clases" Multiplicity="1" />
+          <End Role="productos" Type="Self.productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clases">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="productos">
+              <PropertyRef Name="clase" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PROD_DEPARTAMENTO">
+          <End Role="departamentos" Type="Self.departamentos" Multiplicity="1" />
+          <End Role="productos" Type="Self.productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="departamentos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="productos">
+              <PropertyRef Name="departamento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PROD_FAMILIA">
+          <End Role="familias" Type="Self.familias" Multiplicity="1" />
+          <End Role="productos" Type="Self.productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="familias">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="productos">
+              <PropertyRef Name="familia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="tiendaModelStoreContainer">
+          <EntitySet Name="clases" EntityType="Self.clases" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="departamentos" EntityType="Self.departamentos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="familias" EntityType="Self.familias" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="productos" EntityType="Self.productos" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CLASE_DEPARTAMENTO" Association="Self.FK_CLASE_DEPARTAMENTO">
+            <End Role="departamentos" EntitySet="departamentos" />
+            <End Role="clases" EntitySet="clases" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FAMILIA_CLASE" Association="Self.FK_FAMILIA_CLASE">
+            <End Role="clases" EntitySet="clases" />
+            <End Role="familias" EntitySet="familias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PROD_CLASE" Association="Self.FK_PROD_CLASE">
+            <End Role="clases" EntitySet="clases" />
+            <End Role="productos" EntitySet="productos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PROD_DEPARTAMENTO" Association="Self.FK_PROD_DEPARTAMENTO">
+            <End Role="departamentos" EntitySet="departamentos" />
+            <End Role="productos" EntitySet="productos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PROD_FAMILIA" Association="Self.FK_PROD_FAMILIA">
+            <End Role="familias" EntitySet="familias" />
+            <End Role="productos" EntitySet="productos" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="tiendaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="clases">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="numero_clase" Type="Int32" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="id_departamento" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="departamentos" Relationship="Self.FK_CLASE_DEPARTAMENTO" FromRole="clases" ToRole="departamentos" />
+          <NavigationProperty Name="familias" Relationship="Self.FK_FAMILIA_CLASE" FromRole="clases" ToRole="familias" />
+          <NavigationProperty Name="productos" Relationship="Self.FK_PROD_CLASE" FromRole="clases" ToRole="productos" />
+        </EntityType>
+        <EntityType Name="departamentos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="numero_departamento" Type="Int32" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="clases" Relationship="Self.FK_CLASE_DEPARTAMENTO" FromRole="departamentos" ToRole="clases" />
+          <NavigationProperty Name="productos" Relationship="Self.FK_PROD_DEPARTAMENTO" FromRole="departamentos" ToRole="productos" />
+        </EntityType>
+        <EntityType Name="familias">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="numero_familia" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="id_clase" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="clases" Relationship="Self.FK_FAMILIA_CLASE" FromRole="familias" ToRole="clases" />
+          <NavigationProperty Name="productos" Relationship="Self.FK_PROD_FAMILIA" FromRole="familias" ToRole="productos" />
+        </EntityType>
+        <EntityType Name="productos">
+          <Key>
+            <PropertyRef Name="sku" />
+          </Key>
+          <Property Name="sku" Type="Int32" Nullable="false" />
+          <Property Name="articulo" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="marca" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="modelo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="departamento" Type="Int32" Nullable="false" />
+          <Property Name="clase" Type="Int32" Nullable="false" />
+          <Property Name="familia" Type="Int32" Nullable="false" />
+          <Property Name="fecha_alta" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="stock" Type="Int32" Nullable="false" />
+          <Property Name="cantidad" Type="Int32" Nullable="false" />
+          <Property Name="descontinuado" Type="Boolean" Nullable="false" />
+          <Property Name="fecha_baja" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="clases" Relationship="Self.FK_PROD_CLASE" FromRole="productos" ToRole="clases" />
+          <NavigationProperty Name="departamentos" Relationship="Self.FK_PROD_DEPARTAMENTO" FromRole="productos" ToRole="departamentos" />
+          <NavigationProperty Name="familias" Relationship="Self.FK_PROD_FAMILIA" FromRole="productos" ToRole="familias" />
+        </EntityType>
+        <Association Name="FK_CLASE_DEPARTAMENTO">
+          <End Role="departamentos" Type="Self.departamentos" Multiplicity="1" />
+          <End Role="clases" Type="Self.clases" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="departamentos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="clases">
+              <PropertyRef Name="id_departamento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FAMILIA_CLASE">
+          <End Role="clases" Type="Self.clases" Multiplicity="1" />
+          <End Role="familias" Type="Self.familias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clases">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="familias">
+              <PropertyRef Name="id_clase" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PROD_CLASE">
+          <End Role="clases" Type="Self.clases" Multiplicity="1" />
+          <End Role="productos" Type="Self.productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clases">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="productos">
+              <PropertyRef Name="clase" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PROD_DEPARTAMENTO">
+          <End Role="departamentos" Type="Self.departamentos" Multiplicity="1" />
+          <End Role="productos" Type="Self.productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="departamentos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="productos">
+              <PropertyRef Name="departamento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PROD_FAMILIA">
+          <End Role="familias" Type="Self.familias" Multiplicity="1" />
+          <End Role="productos" Type="Self.productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="familias">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="productos">
+              <PropertyRef Name="familia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="tiendaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="clases" EntityType="Self.clases" />
+          <EntitySet Name="departamentos" EntityType="Self.departamentos" />
+          <EntitySet Name="familias" EntityType="Self.familias" />
+          <EntitySet Name="productos" EntityType="Self.productos" />
+          <AssociationSet Name="FK_CLASE_DEPARTAMENTO" Association="Self.FK_CLASE_DEPARTAMENTO">
+            <End Role="departamentos" EntitySet="departamentos" />
+            <End Role="clases" EntitySet="clases" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FAMILIA_CLASE" Association="Self.FK_FAMILIA_CLASE">
+            <End Role="clases" EntitySet="clases" />
+            <End Role="familias" EntitySet="familias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PROD_CLASE" Association="Self.FK_PROD_CLASE">
+            <End Role="clases" EntitySet="clases" />
+            <End Role="productos" EntitySet="productos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PROD_DEPARTAMENTO" Association="Self.FK_PROD_DEPARTAMENTO">
+            <End Role="departamentos" EntitySet="departamentos" />
+            <End Role="productos" EntitySet="productos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PROD_FAMILIA" Association="Self.FK_PROD_FAMILIA">
+            <End Role="familias" EntitySet="familias" />
+            <End Role="productos" EntitySet="productos" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="tiendaModelStoreContainer" CdmEntityContainer="tiendaEntities">
+          <EntitySetMapping Name="clases">
+            <EntityTypeMapping TypeName="tiendaModel.clases">
+              <MappingFragment StoreEntitySet="clases">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="numero_clase" ColumnName="numero_clase" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id_departamento" ColumnName="id_departamento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="departamentos">
+            <EntityTypeMapping TypeName="tiendaModel.departamentos">
+              <MappingFragment StoreEntitySet="departamentos">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="numero_departamento" ColumnName="numero_departamento" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="familias">
+            <EntityTypeMapping TypeName="tiendaModel.familias">
+              <MappingFragment StoreEntitySet="familias">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="numero_familia" ColumnName="numero_familia" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id_clase" ColumnName="id_clase" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="productos">
+            <EntityTypeMapping TypeName="tiendaModel.productos">
+              <MappingFragment StoreEntitySet="productos">
+                <ScalarProperty Name="sku" ColumnName="sku" />
+                <ScalarProperty Name="articulo" ColumnName="articulo" />
+                <ScalarProperty Name="marca" ColumnName="marca" />
+                <ScalarProperty Name="modelo" ColumnName="modelo" />
+                <ScalarProperty Name="departamento" ColumnName="departamento" />
+                <ScalarProperty Name="clase" ColumnName="clase" />
+                <ScalarProperty Name="familia" ColumnName="familia" />
+                <ScalarProperty Name="fecha_alta" ColumnName="fecha_alta" />
+                <ScalarProperty Name="stock" ColumnName="stock" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="descontinuado" ColumnName="descontinuado" />
+                <ScalarProperty Name="fecha_baja" ColumnName="fecha_baja" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

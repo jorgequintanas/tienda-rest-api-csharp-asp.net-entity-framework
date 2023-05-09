@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="tiendaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="clases">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="numero_clase" Type="int" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="id_departamento" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="departamentos">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="numero_departamento" Type="int" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="255" Nullable="false" />
+  </EntityType>
+  <EntityType Name="familias">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="numero_familia" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="id_clase" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="productos">
+    <Key>
+      <PropertyRef Name="sku" />
+    </Key>
+    <Property Name="sku" Type="int" Nullable="false" />
+    <Property Name="articulo" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="marca" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="modelo" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="departamento" Type="int" Nullable="false" />
+    <Property Name="clase" Type="int" Nullable="false" />
+    <Property Name="familia" Type="int" Nullable="false" />
+    <Property Name="fecha_alta" Type="date" Nullable="false" />
+    <Property Name="stock" Type="int" Nullable="false" />
+    <Property Name="cantidad" Type="int" Nullable="false" />
+    <Property Name="descontinuado" Type="bit" Nullable="false" />
+    <Property Name="fecha_baja" Type="date" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_CLASE_DEPARTAMENTO">
+    <End Role="departamentos" Type="Self.departamentos" Multiplicity="1" />
+    <End Role="clases" Type="Self.clases" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="departamentos">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="clases">
+        <PropertyRef Name="id_departamento" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FAMILIA_CLASE">
+    <End Role="clases" Type="Self.clases" Multiplicity="1" />
+    <End Role="familias" Type="Self.familias" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="clases">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="familias">
+        <PropertyRef Name="id_clase" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PROD_CLASE">
+    <End Role="clases" Type="Self.clases" Multiplicity="1" />
+    <End Role="productos" Type="Self.productos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="clases">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="productos">
+        <PropertyRef Name="clase" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PROD_DEPARTAMENTO">
+    <End Role="departamentos" Type="Self.departamentos" Multiplicity="1" />
+    <End Role="productos" Type="Self.productos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="departamentos">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="productos">
+        <PropertyRef Name="departamento" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PROD_FAMILIA">
+    <End Role="familias" Type="Self.familias" Multiplicity="1" />
+    <End Role="productos" Type="Self.productos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="familias">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="productos">
+        <PropertyRef Name="familia" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="tiendaModelStoreContainer">
+    <EntitySet Name="clases" EntityType="Self.clases" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="departamentos" EntityType="Self.departamentos" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="familias" EntityType="Self.familias" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="productos" EntityType="Self.productos" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_CLASE_DEPARTAMENTO" Association="Self.FK_CLASE_DEPARTAMENTO">
+      <End Role="departamentos" EntitySet="departamentos" />
+      <End Role="clases" EntitySet="clases" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FAMILIA_CLASE" Association="Self.FK_FAMILIA_CLASE">
+      <End Role="clases" EntitySet="clases" />
+      <End Role="familias" EntitySet="familias" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PROD_CLASE" Association="Self.FK_PROD_CLASE">
+      <End Role="clases" EntitySet="clases" />
+      <End Role="productos" EntitySet="productos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PROD_DEPARTAMENTO" Association="Self.FK_PROD_DEPARTAMENTO">
+      <End Role="departamentos" EntitySet="departamentos" />
+      <End Role="productos" EntitySet="productos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PROD_FAMILIA" Association="Self.FK_PROD_FAMILIA">
+      <End Role="familias" EntitySet="familias" />
+      <End Role="productos" EntitySet="productos" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

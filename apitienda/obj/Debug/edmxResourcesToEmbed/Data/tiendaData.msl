@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="tiendaModelStoreContainer" CdmEntityContainer="tiendaEntities">
+    <EntitySetMapping Name="clases">
+      <EntityTypeMapping TypeName="tiendaModel.clases">
+        <MappingFragment StoreEntitySet="clases">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="numero_clase" ColumnName="numero_clase" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="id_departamento" ColumnName="id_departamento" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="departamentos">
+      <EntityTypeMapping TypeName="tiendaModel.departamentos">
+        <MappingFragment StoreEntitySet="departamentos">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="numero_departamento" ColumnName="numero_departamento" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="familias">
+      <EntityTypeMapping TypeName="tiendaModel.familias">
+        <MappingFragment StoreEntitySet="familias">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="numero_familia" ColumnName="numero_familia" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="id_clase" ColumnName="id_clase" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="productos">
+      <EntityTypeMapping TypeName="tiendaModel.productos">
+        <MappingFragment StoreEntitySet="productos">
+          <ScalarProperty Name="sku" ColumnName="sku" />
+          <ScalarProperty Name="articulo" ColumnName="articulo" />
+          <ScalarProperty Name="marca" ColumnName="marca" />
+          <ScalarProperty Name="modelo" ColumnName="modelo" />
+          <ScalarProperty Name="departamento" ColumnName="departamento" />
+          <ScalarProperty Name="clase" ColumnName="clase" />
+          <ScalarProperty Name="familia" ColumnName="familia" />
+          <ScalarProperty Name="fecha_alta" ColumnName="fecha_alta" />
+          <ScalarProperty Name="stock" ColumnName="stock" />
+          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+          <ScalarProperty Name="descontinuado" ColumnName="descontinuado" />
+          <ScalarProperty Name="fecha_baja" ColumnName="fecha_baja" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

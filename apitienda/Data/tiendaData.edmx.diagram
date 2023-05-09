@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b92ced31a1c74a94a7ef5f3312f885b6" Name="Diagram1">
+        <EntityTypeShape EntityType="tiendaModel.clases" Width="1.5" PointX="3" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="tiendaModel.departamentos" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="tiendaModel.familias" Width="1.5" PointX="5.25" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="tiendaModel.productos" Width="1.5" PointX="7.5" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="tiendaModel.FK_CLASE_DEPARTAMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="tiendaModel.FK_FAMILIA_CLASE" ManuallyRouted="false" />
+        <AssociationConnector Association="tiendaModel.FK_PROD_CLASE" ManuallyRouted="false" />
+        <AssociationConnector Association="tiendaModel.FK_PROD_DEPARTAMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="tiendaModel.FK_PROD_FAMILIA" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
