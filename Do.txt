@@ -1,3 +1,3 @@
-1. Ejecutar el Script SQL
-
-2. Modificar las credenciales en las connectionStrings del archivo Web.config
+1. Proyecto ligado a la API del repositorio https://github.com/jorgequintanas/tienda-asp.net-mvc.git
+2. Ejecutar el Script SQL
+3. Modificar las credenciales en las connectionStrings del archivo Web.config
